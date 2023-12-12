@@ -12,6 +12,10 @@ import {
   createIcon,
   IconProps,
   useColorModeValue,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
 } from '@chakra-ui/react';
 
 import { Link } from 'react-router-dom';
