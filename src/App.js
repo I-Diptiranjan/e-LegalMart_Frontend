@@ -11,6 +11,7 @@ import UsersPage from './pages/AdminPages/UsersPage';
 import NotariesPage from './pages/AdminPages/NotariesPage';
 import VerificationPage from './pages/AdminPages/VerificationStatus_Info';
 import VerificationStatusPage from './pages/AdminPages/VerificationStatusPage';
+import AdminDashboardHome from './pages/AdminPages/AdminDashboardHome';
 
 function App() {
   return (
@@ -18,19 +19,29 @@ function App() {
       <Route path="/" element={<HomePage />} />
 
       {/* Admin Pages */}
-      <Route path="/AdvocatesPage" element={<AdvocatePage />} />
-      <Route path="/UsersPage" element={<UsersPage />} />
+      <Route path="/AdminDashboard/HomePage" element={<AdminDashboardHome />} />
+      <Route path="/AdminDashboard/AdvocatesPage" element={<AdvocatePage />} />
+      <Route path="/AdminDashboard/UsersPage" element={<UsersPage />} />
       <Route
-        path="/All Legal Service ProvidersPage"
+        path="/AdminDashboard/All Legal Service ProvidersPage"
         element={<LegalServiceProviderPage />}
       />
-      <Route path="/ArbitratorsPage" element={<ArbitratorsPage />} />
-      <Route path="/Document WritersPage" element={<DocumentWritersPage />} />
-      <Route path="/NotariesPage" element={<NotariesPage />} />
-      <Route path="/MediatorsPage" element={<MediatorsPage />} />
-      <Route path="/Complain RecievedPage" element={<ComplainReceivedPage />} />
       <Route
-        path="/Verification StatusPage"
+        path="/AdminDashboard/ArbitratorsPage"
+        element={<ArbitratorsPage />}
+      />
+      <Route
+        path="/AdminDashboard/Document WritersPage"
+        element={<DocumentWritersPage />}
+      />
+      <Route path="/AdminDashboard/NotariesPage" element={<NotariesPage />} />
+      <Route path="/AdminDashboard/MediatorsPage" element={<MediatorsPage />} />
+      <Route
+        path="/AdminDashboard/Complain RecievedPage"
+        element={<ComplainReceivedPage />}
+      />
+      <Route
+        path="/AdminDashboard/Verification StatusPage"
         element={<VerificationStatusPage />}
       />
     </Routes>

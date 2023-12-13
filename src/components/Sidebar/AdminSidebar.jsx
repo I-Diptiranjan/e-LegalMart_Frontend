@@ -9,20 +9,29 @@ import { FcViewDetails } from 'react-icons/fc';
 import { FcTodoList } from 'react-icons/fc';
 import { FcPortraitMode } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
+import { FcManager } from 'react-icons/fc';
+import { FcNews } from 'react-icons/fc';
+import { FcBarChart } from 'react-icons/fc';
+import { FcBriefcase } from 'react-icons/fc';
+import { FcConferenceCall } from 'react-icons/fc';
+import { GoLaw } from 'react-icons/go';
+import { FaStamp } from 'react-icons/fa';
+import { FaHandshake } from 'react-icons/fa';
 
 const AdminSidebar = ({ children }) => {
   const [open, setOpen] = useState(true);
   const Menus = [
-    { title: 'Users', src: <FcPortraitMode size={'30px'} /> },
+    { title: 'Home', src: <FcBarChart size={'20px'} /> },
+    { title: 'Users', src: <FcConferenceCall size={'20px'} /> },
     {
       title: 'All Legal Service Providers',
-      src: <FcPortraitMode size={'30px'} />,
+      src: <GoLaw size={'20px'} />,
     },
-    { title: 'Advocates', src: <FcBusinessman size={'30px'} /> },
-    { title: 'Notaries', src: <FcBusinessman size={'30px'} /> },
-    { title: 'Document Writers', src: <FcBusinessman size={'30px'} /> },
-    { title: 'Mediators', src: <FcBusinessman size={'30px'} /> },
-    { title: 'Arbitrators', src: <FcBusinessman size={'30px'} /> },
+    { title: 'Advocates', src: <FcManager size={'20px'} /> },
+    { title: 'Notaries', src: <FaStamp size={'20px'} /> },
+    { title: 'Document Writers', src: <FcNews size={'20px'} /> },
+    { title: 'Mediators', src: <FaHandshake size={'20px'} /> },
+    { title: 'Arbitrators', src: <FcBriefcase size={'20px'} /> },
     {
       title: 'Complain Recieved',
       src: <FcViewDetails size={'30px'} />,
@@ -61,10 +70,10 @@ const AdminSidebar = ({ children }) => {
         </div>
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
-            <Link to={`/${Menu.title}Page`}>
+            <Link to={`/AdminDashboard/${Menu.title}Page`}>
               <li
                 key={index}
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+                className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
               ${Menu.gap ? 'mt-9' : 'mt-2'} ${
                   index === 0 && 'bg-light-white'
                 } `}
@@ -73,7 +82,7 @@ const AdminSidebar = ({ children }) => {
                 <span
                   className={`${
                     !open && 'hidden'
-                  } origin-left duration-200 text-lg`}
+                  } origin-left duration-200 text-md`}
                 >
                   {Menu.title}
                 </span>
