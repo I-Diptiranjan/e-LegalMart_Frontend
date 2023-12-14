@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   CSSReset,
@@ -12,7 +12,12 @@ import {
   Button,
   VStack,
   Text,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Box,
 } from '@chakra-ui/react';
+import { BiSearch } from 'react-icons/bi';
 
 const theme = extendTheme({
   styles: {
@@ -27,7 +32,9 @@ const theme = extendTheme({
   },
 });
 
-const Users = () => {
+const Users_Info = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
   // Sample data for users
   const usersData = [
     {
@@ -48,50 +55,68 @@ const Users = () => {
   ];
 
   const handleDelete = id => {
-    // Handle delete action for the user with the given id
     console.log(`Delete user with id ${id}`);
   };
+
+  const filteredUsers = usersData.filter(user =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <VStack spacing="4" align="center" padding="20px">
+      <VStack spacing={['4', '8']} align="center" padding={['4', '8']}>
         <Text fontSize="xl" fontWeight="bold">
           User Information
         </Text>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Phone</Th>
-              <Th>Location</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {usersData.map(user => (
-              <Tr key={user.id}>
-                <Td>{user.name}</Td>
-                <Td>{user.email}</Td>
-                <Td>{user.phone}</Td>
-                <Td>{user.location}</Td>
-                <Td>
-                  <Button
-                    colorScheme="red"
-                    size="sm"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    Delete
-                  </Button>
-                </Td>
+        <Box width="100%" maxW={['100%', '600px']}>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <BiSearch color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search by name..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+        <Box width="100%" overflow="auto">
+          <Table variant="simple" width="100%">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
+                <Th>Location</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {filteredUsers.map(user => (
+                <Tr key={user.id}>
+                  <Td>{user.name}</Td>
+                  <Td>{user.email}</Td>
+                  <Td>{user.phone}</Td>
+                  <Td>{user.location}</Td>
+                  <Td>
+                    <Button
+                      colorScheme="red"
+                      size="sm"
+                      onClick={() => handleDelete(user.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
       </VStack>
     </ChakraProvider>
   );
 };
 
-export default Users;
+export default Users_Info;

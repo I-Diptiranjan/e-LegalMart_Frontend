@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   CSSReset,
@@ -13,7 +13,12 @@ import {
   Button,
   VStack,
   Text,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Box,
 } from '@chakra-ui/react';
+import { BiSearch } from 'react-icons/bi';
 
 const theme = extendTheme({
   styles: {
@@ -28,7 +33,9 @@ const theme = extendTheme({
   },
 });
 
-const Notaries = () => {
+const Notaries_Info = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
   // Sample data for notaries
   const notariesData = [
     {
@@ -53,84 +60,100 @@ const Notaries = () => {
   ];
 
   const handleApprove = id => {
-    // Handle approve action for the notary with the given id
     console.log(`Approve notary with id ${id}`);
   };
 
   const handlePending = id => {
-    // Handle pending action for the notary with the given id
     console.log(`Mark notary with id ${id} as pending`);
   };
 
   const handleDelete = id => {
-    // Handle delete action for the notary with the given id
     console.log(`Delete notary with id ${id}`);
   };
+
+  const filteredNotaries = notariesData.filter(notary =>
+    notary.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <VStack spacing="4" align="center" padding="20px">
+      <VStack spacing={['4', '8']} align="center" padding={['4', '8']}>
         <Text fontSize="xl" fontWeight="bold">
           Notary Information
         </Text>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Phone</Th>
-              <Th>Location</Th>
-              <Th>Specialisation</Th>
-              <Th>Status</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {notariesData.map(notary => (
-              <Tr key={notary.id}>
-                <Td>{notary.name}</Td>
-                <Td>{notary.email}</Td>
-                <Td>{notary.phone}</Td>
-                <Td>{notary.location}</Td>
-                <Td>{notary.specialisation}</Td>
-                <Td>{notary.status}</Td>
-                <Td>
-                  <HStack spacing="2">
-                    {notary.status === 'Pending' && (
-                      <Button
-                        colorScheme="green"
-                        size="sm"
-                        onClick={() => handleApprove(notary.id)}
-                      >
-                        Approve
-                      </Button>
-                    )}
-                    {notary.status === 'Approved' && (
-                      <Button
-                        colorScheme="orange"
-                        size="sm"
-                        onClick={() => handlePending(notary.id)}
-                      >
-                        Pending
-                      </Button>
-                    )}
-                    <Button
-                      colorScheme="red"
-                      size="sm"
-                      onClick={() => handleDelete(notary.id)}
-                    >
-                      Delete
-                    </Button>
-                  </HStack>
-                </Td>
+        <Box width="100%" maxW={['100%', '600px']}>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <BiSearch color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search by name..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+        <Box width="100%" overflow="auto">
+          <Table variant="simple" width="100%">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
+                <Th>Location</Th>
+                <Th>Specialisation</Th>
+                <Th>Status</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {filteredNotaries.map(notary => (
+                <Tr key={notary.id}>
+                  <Td>{notary.name}</Td>
+                  <Td>{notary.email}</Td>
+                  <Td>{notary.phone}</Td>
+                  <Td>{notary.location}</Td>
+                  <Td>{notary.specialisation}</Td>
+                  <Td>{notary.status}</Td>
+                  <Td>
+                    <HStack spacing="2">
+                      {notary.status === 'Pending' && (
+                        <Button
+                          colorScheme="green"
+                          size="sm"
+                          onClick={() => handleApprove(notary.id)}
+                        >
+                          Approve
+                        </Button>
+                      )}
+                      {notary.status === 'Approved' && (
+                        <Button
+                          colorScheme="orange"
+                          size="sm"
+                          onClick={() => handlePending(notary.id)}
+                        >
+                          Pending
+                        </Button>
+                      )}
+                      <Button
+                        colorScheme="red"
+                        size="sm"
+                        onClick={() => handleDelete(notary.id)}
+                      >
+                        Delete
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
       </VStack>
     </ChakraProvider>
   );
 };
 
-export default Notaries;
+export default Notaries_Info;

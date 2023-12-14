@@ -35,25 +35,39 @@ const LegalServiceProviders_Info = () => {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <VStack spacing="4" align="center" padding="20px">
-        <Text fontSize="xl" fontWeight="bold">
+      <VStack spacing={['4', '8']} align="center" padding={['20px', '40px']}>
+        <Text fontSize="xl" fontWeight="bold" color="white">
           Legal Service Providers Overview
         </Text>
-        <Flex>
+        <Flex
+          justify={['center', 'space-between']}
+          wrap={['wrap', 'wrap', 'nowrap']}
+          spacing={['4', '8', '16']}
+          gap={8}
+        >
           {Object.entries(providerCounts).map(([provider, count]) => (
             <Box
               key={provider}
-              flex="1"
+              width={['90%', '45%', '30%']}
               textAlign="center"
               p="4"
               borderWidth="1px"
-              borderRadius="md"
+              borderRadius="lg"
               boxShadow="md"
+              marginBottom={['4', '4', '0']}
+              _hover={{
+                transform: 'scale(1.05)',
+                transition: 'transform 0.3s ease-in-out',
+                cursor: 'pointer',
+                boxShadow: 'lg',
+              }}
             >
-              <Text fontSize="lg" fontWeight="bold" mb="2">
+              <Text fontSize="2xl" fontWeight="bold" mb="2" color="white">
                 {provider.charAt(0).toUpperCase() + provider.slice(1)}
               </Text>
-              <Text fontSize="xl">{count}</Text>
+              <Text fontSize="l" color="white">
+                {count}
+              </Text>
             </Box>
           ))}
         </Flex>

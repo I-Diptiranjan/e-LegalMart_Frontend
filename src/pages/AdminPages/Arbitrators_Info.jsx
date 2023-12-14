@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   CSSReset,
@@ -13,7 +13,12 @@ import {
   Button,
   VStack,
   Text,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Box,
 } from '@chakra-ui/react';
+import { BiSearch } from 'react-icons/bi';
 
 const theme = extendTheme({
   styles: {
@@ -29,7 +34,7 @@ const theme = extendTheme({
 });
 
 const Arbitrators_Info = () => {
-  // Sample data for arbitrators
+  const [searchTerm, setSearchTerm] = useState('');
   const arbitratorsData = [
     {
       id: 1,
@@ -67,67 +72,86 @@ const Arbitrators_Info = () => {
     console.log(`Delete arbitrator with id ${id}`);
   };
 
+  const filteredArbitrators = arbitratorsData.filter(arbitrator =>
+    arbitrator.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <VStack spacing="4" align="center" padding="20px">
+      <VStack spacing="4" align="center" padding={['20px', '40px']}>
         <Text fontSize="xl" fontWeight="bold">
           Arbitrator Information
         </Text>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Phone</Th>
-              <Th>Location</Th>
-              <Th>Specialisation</Th>
-              <Th>Status</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {arbitratorsData.map(arbitrator => (
-              <Tr key={arbitrator.id}>
-                <Td>{arbitrator.name}</Td>
-                <Td>{arbitrator.email}</Td>
-                <Td>{arbitrator.phone}</Td>
-                <Td>{arbitrator.location}</Td>
-                <Td>{arbitrator.specialisation}</Td>
-                <Td>{arbitrator.status}</Td>
-                <Td>
-                  <HStack spacing="2">
-                    {arbitrator.status === 'Pending' && (
-                      <Button
-                        colorScheme="green"
-                        size="sm"
-                        onClick={() => handleApprove(arbitrator.id)}
-                      >
-                        Approve
-                      </Button>
-                    )}
-                    {arbitrator.status === 'Approved' && (
-                      <Button
-                        colorScheme="orange"
-                        size="sm"
-                        onClick={() => handlePending(arbitrator.id)}
-                      >
-                        Pending
-                      </Button>
-                    )}
-                    <Button
-                      colorScheme="red"
-                      size="sm"
-                      onClick={() => handleDelete(arbitrator.id)}
-                    >
-                      Delete
-                    </Button>
-                  </HStack>
-                </Td>
+        <Box width="100%" maxWidth="600px">
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <BiSearch color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search by name..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+        <Box width="100%" overflowX="auto">
+          <Table variant="simple" width="100%">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
+                <Th>Location</Th>
+                <Th>Specialisation</Th>
+                <Th>Status</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {filteredArbitrators.map(arbitrator => (
+                <Tr key={arbitrator.id}>
+                  <Td>{arbitrator.name}</Td>
+                  <Td>{arbitrator.email}</Td>
+                  <Td>{arbitrator.phone}</Td>
+                  <Td>{arbitrator.location}</Td>
+                  <Td>{arbitrator.specialisation}</Td>
+                  <Td>{arbitrator.status}</Td>
+                  <Td>
+                    <HStack spacing="2">
+                      {arbitrator.status === 'Pending' && (
+                        <Button
+                          colorScheme="green"
+                          size="sm"
+                          onClick={() => handleApprove(arbitrator.id)}
+                        >
+                          Approve
+                        </Button>
+                      )}
+                      {arbitrator.status === 'Approved' && (
+                        <Button
+                          colorScheme="orange"
+                          size="sm"
+                          onClick={() => handlePending(arbitrator.id)}
+                        >
+                          Pending
+                        </Button>
+                      )}
+                      <Button
+                        colorScheme="red"
+                        size="sm"
+                        onClick={() => handleDelete(arbitrator.id)}
+                      >
+                        Delete
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
       </VStack>
     </ChakraProvider>
   );

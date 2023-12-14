@@ -13,6 +13,8 @@ import VerificationPage from './pages/AdminPages/VerificationStatus_Info';
 import VerificationStatusPage from './pages/AdminPages/VerificationStatusPage';
 import AdminDashboardHome from './pages/AdminPages/AdminDashboardHome';
 
+import Advocates_Info from './pages/AdminPages/Advocates_Info';
+
 function App() {
   return (
     <Routes>
@@ -45,6 +47,8 @@ function App() {
         element={<VerificationStatusPage />}
       />
     </Routes>
+    // <AdvocateSidebar />
+    // <Advocates_Info />
   );
 }
 

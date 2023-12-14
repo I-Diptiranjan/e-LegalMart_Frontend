@@ -15,7 +15,10 @@ import {
   HStack,
   Button,
   Input,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/react';
+import { BiSearch } from 'react-icons/bi';
 
 const theme = extendTheme({
   styles: {
@@ -30,7 +33,7 @@ const theme = extendTheme({
   },
 });
 
-const VerificationPage = () => {
+const VerificationPage_Info = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [legalServiceProviders, setLegalServiceProviders] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(null);
@@ -83,94 +86,108 @@ const VerificationPage = () => {
     console.log('Rejecting legal service provider with ID:', id);
   };
 
+  const handleRowClick = provider => {
+    setSelectedProvider(provider);
+  };
+
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <VStack spacing="4" align="center" padding="20px">
+      <VStack spacing={['4', '8']} align="center" padding={['4', '8']}>
         <Text fontSize="xl" fontWeight="bold">
           Verification Page
         </Text>
-        {/* Circular and professional search bar */}
-        <Input
-          size="sm"
-          placeholder="Search by name, email, or phone"
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-          borderRadius="full"
-        />
+        {/* Rectangular search bar */}
+        <Box width="100%" maxW={['100%', '600px']}>
+          <InputGroup>
+            <InputLeftElement>
+              <BiSearch color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search by name, email, or phone"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              borderRadius="md"
+            />
+          </InputGroup>
+        </Box>
         {/* Table of legal service providers */}
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Phone</Th>
-              <Th>ID Proof</Th>
-              <Th>License ID</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {legalServiceProviders
-              .filter(
-                provider =>
-                  provider.name
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  provider.email
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                  provider.phone
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-              )
-              .map(provider => (
-                <Tr
-                  key={provider.id}
-                  cursor="pointer"
-                  bg={
-                    selectedProvider && selectedProvider.id === provider.id
-                      ? 'gray.200'
-                      : ''
-                  }
-                >
-                  <Td>{provider.name}</Td>
-                  <Td>{provider.email}</Td>
-                  <Td>{provider.phone}</Td>
-                  <Td>{provider.idProof}</Td>
-                  <Td>{provider.licenseId}</Td>
-                  <Td>
-                    <HStack spacing="2">
-                      <Button
-                        colorScheme="teal"
-                        size="sm"
-                        onClick={() => handleVerify(provider.id)}
-                      >
-                        Verify
-                      </Button>
-                      <Button
-                        colorScheme="green"
-                        size="sm"
-                        onClick={() => handleAccept(provider.id)}
-                      >
-                        Accept
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        size="sm"
-                        onClick={() => handleReject(provider.id)}
-                      >
-                        Reject
-                      </Button>
-                    </HStack>
-                  </Td>
-                </Tr>
-              ))}
-          </Tbody>
-        </Table>
+        <Box width="100%" overflow="auto">
+          <Table variant="simple" width="100%">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
+                <Th>ID Proof</Th>
+                <Th>License ID</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {legalServiceProviders
+                .filter(
+                  provider =>
+                    provider.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    provider.email
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    provider.phone
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                )
+                .map(provider => (
+                  <Tr
+                    key={provider.id}
+                    cursor="pointer"
+                    onClick={() => handleRowClick(provider)}
+                    bg={
+                      selectedProvider && selectedProvider.id === provider.id
+                        ? 'gray.200'
+                        : ''
+                    }
+                  >
+                    <Td>{provider.name}</Td>
+                    <Td>{provider.email}</Td>
+                    <Td>{provider.phone}</Td>
+                    <Td>{provider.idProof}</Td>
+                    <Td>{provider.licenseId}</Td>
+                    <Td>
+                      <HStack spacing="2">
+                        <Button
+                          colorScheme="teal"
+                          size="sm"
+                          onClick={() => handleVerify(provider.id)}
+                        >
+                          Verify
+                        </Button>
+                        <Button
+                          colorScheme="green"
+                          size="sm"
+                          onClick={() => handleAccept(provider.id)}
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          size="sm"
+                          onClick={() => handleReject(provider.id)}
+                        >
+                          Reject
+                        </Button>
+                      </HStack>
+                    </Td>
+                  </Tr>
+                ))}
+            </Tbody>
+          </Table>
+        </Box>
       </VStack>
     </ChakraProvider>
   );
 };
 
-export default VerificationPage;
+export default VerificationPage_Info;

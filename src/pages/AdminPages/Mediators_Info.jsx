@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   CSSReset,
@@ -13,7 +13,12 @@ import {
   Button,
   VStack,
   Text,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Box,
 } from '@chakra-ui/react';
+import { BiSearch } from 'react-icons/bi';
 
 const theme = extendTheme({
   styles: {
@@ -28,7 +33,9 @@ const theme = extendTheme({
   },
 });
 
-const Mediators = () => {
+const Mediators_Info = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
   // Sample data for mediators
   const mediatorsData = [
     {
@@ -53,84 +60,100 @@ const Mediators = () => {
   ];
 
   const handleApprove = id => {
-    // Handle approve action for the mediator with the given id
     console.log(`Approve mediator with id ${id}`);
   };
 
   const handlePending = id => {
-    // Handle pending action for the mediator with the given id
     console.log(`Mark mediator with id ${id} as pending`);
   };
 
   const handleDelete = id => {
-    // Handle delete action for the mediator with the given id
     console.log(`Delete mediator with id ${id}`);
   };
+
+  const filteredMediators = mediatorsData.filter(mediator =>
+    mediator.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <VStack spacing="4" align="center" padding="20px">
+      <VStack spacing={['4', '8']} align="center" padding={['4', '8']}>
         <Text fontSize="xl" fontWeight="bold">
           Mediator Information
         </Text>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Phone</Th>
-              <Th>Location</Th>
-              <Th>Specialisation</Th>
-              <Th>Status</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {mediatorsData.map(mediator => (
-              <Tr key={mediator.id}>
-                <Td>{mediator.name}</Td>
-                <Td>{mediator.email}</Td>
-                <Td>{mediator.phone}</Td>
-                <Td>{mediator.location}</Td>
-                <Td>{mediator.specialisation}</Td>
-                <Td>{mediator.status}</Td>
-                <Td>
-                  <HStack spacing="2">
-                    {mediator.status === 'Pending' && (
-                      <Button
-                        colorScheme="green"
-                        size="sm"
-                        onClick={() => handleApprove(mediator.id)}
-                      >
-                        Approve
-                      </Button>
-                    )}
-                    {mediator.status === 'Approved' && (
-                      <Button
-                        colorScheme="orange"
-                        size="sm"
-                        onClick={() => handlePending(mediator.id)}
-                      >
-                        Pending
-                      </Button>
-                    )}
-                    <Button
-                      colorScheme="red"
-                      size="sm"
-                      onClick={() => handleDelete(mediator.id)}
-                    >
-                      Delete
-                    </Button>
-                  </HStack>
-                </Td>
+        <Box width="100%" maxW={['100%', '600px']}>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <BiSearch color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search by name..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+        <Box width="100%" overflow="auto">
+          <Table variant="simple" width="100%">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
+                <Th>Location</Th>
+                <Th>Specialisation</Th>
+                <Th>Status</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {filteredMediators.map(mediator => (
+                <Tr key={mediator.id}>
+                  <Td>{mediator.name}</Td>
+                  <Td>{mediator.email}</Td>
+                  <Td>{mediator.phone}</Td>
+                  <Td>{mediator.location}</Td>
+                  <Td>{mediator.specialisation}</Td>
+                  <Td>{mediator.status}</Td>
+                  <Td>
+                    <HStack spacing="2">
+                      {mediator.status === 'Pending' && (
+                        <Button
+                          colorScheme="green"
+                          size="sm"
+                          onClick={() => handleApprove(mediator.id)}
+                        >
+                          Approve
+                        </Button>
+                      )}
+                      {mediator.status === 'Approved' && (
+                        <Button
+                          colorScheme="orange"
+                          size="sm"
+                          onClick={() => handlePending(mediator.id)}
+                        >
+                          Pending
+                        </Button>
+                      )}
+                      <Button
+                        colorScheme="red"
+                        size="sm"
+                        onClick={() => handleDelete(mediator.id)}
+                      >
+                        Delete
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
       </VStack>
     </ChakraProvider>
   );
 };
 
-export default Mediators;
+export default Mediators_Info;

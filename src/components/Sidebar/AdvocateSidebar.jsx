@@ -18,7 +18,7 @@ import { GoLaw } from 'react-icons/go';
 import { FaStamp } from 'react-icons/fa';
 import { FaHandshake } from 'react-icons/fa';
 
-const AdminSidebar = ({ children }) => {
+const AdvocateSidebar = ({ children }) => {
   const [open, setOpen] = useState(true);
   const Menus = [
     { title: 'Home', src: <FcBarChart size={'20px'} /> },
@@ -44,12 +44,12 @@ const AdminSidebar = ({ children }) => {
     <div className="flex">
       <div
         className={` ${
-          open ? 'w-72' : 'w-12 '
-        } bg-dark-blue h-screen p-3  pt-8 relative duration-300 `}
+          open ? 'w-72' : 'w-20 '
+        } bg-dark-red h-screen p-5  pt-8 relative duration-300`}
       >
         <img
           src={Control}
-          className={`absolute cursor-pointer -right-6 top-9 w-7 border-dark-purple
+          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
            border-2 rounded-full  ${!open && 'rotate-180'}`}
           onClick={() => setOpen(!open)}
         />
@@ -65,10 +65,10 @@ const AdminSidebar = ({ children }) => {
               !open && 'scale-0'
             }`}
           >
-            Admin Dashboard
+            Advocate Dashboard
           </h1>
         </div>
-        <ul className="pt-6">
+        <ul className="pt-6 overflow-x-auto">
           {Menus.map((Menu, index) => (
             <Link to={`/AdminDashboard/${Menu.title}Page`}>
               <li
@@ -91,8 +91,8 @@ const AdminSidebar = ({ children }) => {
           ))}
         </ul>
       </div>
-      <div className="h-screen flex-1 p-7 overflow-x-auto">{children}</div>
+      <div className="h-screen flex-1 p-7">{children}</div>
     </div>
   );
 };
-export default AdminSidebar;
+export default AdvocateSidebar;
