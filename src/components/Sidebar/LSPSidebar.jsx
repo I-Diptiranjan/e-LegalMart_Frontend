@@ -17,39 +17,38 @@ import { FcConferenceCall } from 'react-icons/fc';
 import { GoLaw } from 'react-icons/go';
 import { FaStamp } from 'react-icons/fa';
 import { FaHandshake } from 'react-icons/fa';
+import { FcLibrary } from 'react-icons/fc';
+import { FcReading } from 'react-icons/fc';
+import { FcSms } from 'react-icons/fc';
 
-const AdvocateSidebar = ({ children }) => {
+const LSPSidebar = ({ children }) => {
   const [open, setOpen] = useState(true);
   const Menus = [
-    { title: 'Home', src: <FcBarChart size={'20px'} /> },
-    { title: 'Users', src: <FcConferenceCall size={'20px'} /> },
+    { title: 'Home', src: <FcLibrary size={'20px'} /> },
+    { title: 'Dashboard', src: <FcBarChart size={'20px'} /> },
     {
-      title: 'All Legal Service Providers',
-      src: <GoLaw size={'20px'} />,
+      title: 'Profile',
+      src: <FcManager size={'20px'} />,
     },
-    { title: 'Advocates', src: <FcManager size={'20px'} /> },
-    { title: 'Notaries', src: <FaStamp size={'20px'} /> },
-    { title: 'Document Writers', src: <FcNews size={'20px'} /> },
-    { title: 'Mediators', src: <FaHandshake size={'20px'} /> },
-    { title: 'Arbitrators', src: <FcBriefcase size={'20px'} /> },
+    { title: 'Cases', src: <FcReading size={'20px'} /> },
+
     {
       title: 'Complain Recieved',
-      src: <FcViewDetails size={'30px'} />,
-      gap: true,
+      src: <FcViewDetails size={'20px'} />,
     },
-    { title: 'Verification Status', src: <FcTodoList size={'30px'} /> },
+    { title: 'Chat', src: <FcSms size={'20px'} />, gap: true },
   ];
 
   return (
     <div className="flex">
       <div
         className={` ${
-          open ? 'w-72' : 'w-20 '
-        } bg-dark-red h-screen p-5  pt-8 relative duration-300`}
+          open ? 'w-60' : 'w-12 '
+        } bg-dark-blue h-screen p-3  pt-8 relative duration-300 `}
       >
         <img
           src={Control}
-          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
+          className={`absolute cursor-pointer -right-6 top-9 w-7 border-dark-purple
            border-2 rounded-full  ${!open && 'rotate-180'}`}
           onClick={() => setOpen(!open)}
         />
@@ -65,12 +64,12 @@ const AdvocateSidebar = ({ children }) => {
               !open && 'scale-0'
             }`}
           >
-            Advocate Dashboard
+            LSP Dashboard
           </h1>
         </div>
-        <ul className="pt-6 overflow-x-auto">
+        <ul className="pt-6">
           {Menus.map((Menu, index) => (
-            <Link to={`/AdminDashboard/${Menu.title}Page`}>
+            <Link to={`/LSPDashboard/${Menu.title}Page`}>
               <li
                 key={index}
                 className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
@@ -91,8 +90,8 @@ const AdvocateSidebar = ({ children }) => {
           ))}
         </ul>
       </div>
-      <div className="h-screen flex-1 p-7">{children}</div>
+      <div className="h-screen flex-1 p-7 overflow-x-auto">{children}</div>
     </div>
   );
 };
-export default AdvocateSidebar;
+export default LSPSidebar;

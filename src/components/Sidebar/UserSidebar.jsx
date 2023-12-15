@@ -18,34 +18,32 @@ import { GoLaw } from 'react-icons/go';
 import { FaStamp } from 'react-icons/fa';
 import { FaHandshake } from 'react-icons/fa';
 import { FcLibrary } from 'react-icons/fc';
+import { FcReading } from 'react-icons/fc';
+import { FcSms } from 'react-icons/fc';
 
-const AdminSidebar = ({ children }) => {
+const UserSidebar = ({ children }) => {
   const [open, setOpen] = useState(true);
   const Menus = [
     { title: 'Home', src: <FcLibrary size={'20px'} /> },
-    { title: 'Users', src: <FcConferenceCall size={'20px'} /> },
+    { title: 'Dashboard', src: <FcBarChart size={'20px'} /> },
     {
-      title: 'All Legal Service Providers',
-      src: <GoLaw size={'20px'} />,
+      title: 'Profile',
+      src: <FcManager size={'20px'} />,
     },
-    { title: 'Advocates', src: <FcManager size={'20px'} /> },
-    { title: 'Notaries', src: <FaStamp size={'20px'} /> },
-    { title: 'Document Writers', src: <FcNews size={'20px'} /> },
-    { title: 'Mediators', src: <FaHandshake size={'20px'} /> },
-    { title: 'Arbitrators', src: <FcBriefcase size={'20px'} /> },
+    { title: 'List of Complaints', src: <FcReading size={'20px'} /> },
+
     {
-      title: 'Complain Recieved',
+      title: 'File a Complaint',
       src: <FcViewDetails size={'20px'} />,
-      gap: true,
     },
-    { title: 'Verification Status', src: <FcTodoList size={'30px'} /> },
+    { title: 'Chat', src: <FcSms size={'20px'} />, gap: true },
   ];
 
   return (
     <div className="flex">
       <div
         className={` ${
-          open ? 'w-72' : 'w-12 '
+          open ? 'w-60' : 'w-12 '
         } bg-dark-blue h-screen p-3  pt-8 relative duration-300 `}
       >
         <img
@@ -66,12 +64,12 @@ const AdminSidebar = ({ children }) => {
               !open && 'scale-0'
             }`}
           >
-            Admin Dashboard
+            User Dashboard
           </h1>
         </div>
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
-            <Link to={`/AdminDashboard/${Menu.title}Page`}>
+            <Link to={`/UserDashboard/${Menu.title}Page`}>
               <li
                 key={index}
                 className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
@@ -96,4 +94,4 @@ const AdminSidebar = ({ children }) => {
     </div>
   );
 };
-export default AdminSidebar;
+export default UserSidebar;
